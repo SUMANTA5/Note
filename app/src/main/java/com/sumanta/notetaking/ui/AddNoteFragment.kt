@@ -14,7 +14,7 @@ import com.sumanta.notetaking.db.NoteDatabase
 import kotlinx.android.synthetic.main.fragment_add_note.*
 import kotlinx.coroutines.launch
 
-class AddNoteFragment : BaseFragment(){
+class AddNoteFragment : BaseFragment() {
 
 
     private var note: Note? = null
@@ -37,17 +37,17 @@ class AddNoteFragment : BaseFragment(){
             edit_text_body.setText(note?.note)
         }
 
-        button_save.setOnClickListener {view ->
+        button_save.setOnClickListener { view ->
             val noteTitle = edit_text_title.text.toString().trim()
             val noteBody = edit_text_body.text.toString().trim()
 
-            if (noteTitle.isEmpty()){
+            if (noteTitle.isEmpty()) {
                 edit_text_title.error = "title required"
                 edit_text_title.requestFocus()
                 return@setOnClickListener
             }
 
-            if (noteBody.isEmpty()){
+            if (noteBody.isEmpty()) {
                 edit_text_body.error = "note required"
                 edit_text_body.requestFocus()
                 return@setOnClickListener
@@ -57,10 +57,10 @@ class AddNoteFragment : BaseFragment(){
                 context?.let {
                     val mNote = Note(noteTitle, noteBody)
 
-                    if (note == null){
+                    if (note == null) {
                         NoteDatabase(it).getNoteDao().addNote(mNote)
                         it.toast("Successfully saved")
-                    }else{
+                    } else {
                         mNote.id = note!!.id
                         NoteDatabase(it).getNoteDao().updateNote(mNote)
                         it.toast("Note Updated")
@@ -72,11 +72,11 @@ class AddNoteFragment : BaseFragment(){
         }
     }
 
-    private fun deleteNote(){
+    private fun deleteNote() {
         AlertDialog.Builder(context).apply {
             setTitle("Are you sure?")
             setMessage("You cannot undo")
-            setPositiveButton("Yes"){ _, _ ->
+            setPositiveButton("Yes") { _, _ ->
                 launch {
                     NoteDatabase(context).getNoteDao().deleteNote(note!!)
 
@@ -84,19 +84,21 @@ class AddNoteFragment : BaseFragment(){
                     Navigation.findNavController(requireView()).navigate(action)
                 }
             }
-            setNegativeButton("No"){ _, _ ->
+            setNegativeButton("No") { _, _ ->
 
             }
         }.create().show()
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.delete -> if (note != null) deleteNote() else context?.toast("Cannot Delete")
         }
 
         return super.onOptionsItemSelected(item)
 
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.menu, menu)

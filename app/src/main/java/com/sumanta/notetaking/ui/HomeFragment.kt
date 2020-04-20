@@ -31,7 +31,8 @@ class HomeFragment : BaseFragment() {
         super.onActivityCreated(savedInstanceState)
 
         recycler_note.setHasFixedSize(true)
-        recycler_note.layoutManager = StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL)
+        recycler_note.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
 
         launch {
             context?.let {

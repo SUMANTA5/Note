@@ -10,14 +10,14 @@ import com.sumanta.notetaking.db.Note
 import com.sumanta.notetaking.ui.HomeFragmentDirections
 import kotlinx.android.synthetic.main.note_layout.view.*
 
-class NotesAdapter(val note : List<Note>): RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+class NotesAdapter(val note: List<Note>) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
-    class NoteViewHolder (val view: View): RecyclerView.ViewHolder(view)
+    class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
             LayoutInflater.from(parent.context)
-                .inflate(R.layout.note_layout,parent,false)
+                .inflate(R.layout.note_layout, parent, false)
         )
     }
 
@@ -31,7 +31,7 @@ class NotesAdapter(val note : List<Note>): RecyclerView.Adapter<NotesAdapter.Not
 
 
         holder.view.setOnClickListener {
-          val action = HomeFragmentDirections.actionAddNote()
+            val action = HomeFragmentDirections.actionAddNote()
             action.note = note[position]
             Navigation.findNavController(it).navigate(action)
         }

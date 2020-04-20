@@ -12,18 +12,20 @@ import androidx.room.RoomDatabase
 )
 abstract class NoteDatabase : RoomDatabase() {
 
-    abstract fun getNoteDao() : NoteDao
+    abstract fun getNoteDao(): NoteDao
 
     companion object {
 
-        @Volatile private var instance : NoteDatabase? = null
+        @Volatile
+        private var instance: NoteDatabase? = null
         private val Lock = Any()
 
-        operator fun invoke(context: Context) = instance ?: synchronized(Lock){
+        operator fun invoke(context: Context) = instance ?: synchronized(Lock) {
             instance ?: buildDatabase(context).also {
                 instance = it
             }
         }
+
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context.applicationContext,
             NoteDatabase::class.java,
